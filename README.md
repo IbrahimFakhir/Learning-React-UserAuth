@@ -1,6 +1,6 @@
 # Learning-React-UserAuth
 
-My learning journey along Dave Gray's Youtube Tutorials.
+My learning journey through Dave Gray's Youtube Tutorials.
 
 Tutorial 1: https://www.youtube.com/watch?v=brcHK3P6ChQ
 
