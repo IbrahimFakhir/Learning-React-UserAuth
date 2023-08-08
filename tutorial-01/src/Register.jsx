@@ -6,6 +6,8 @@ import axios from "./api/axios";
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
+const REGISTER_URL = '/register';
+
 export default function Register() {
 	const userRef = useRef();
 	const errRef = useRef();
@@ -59,8 +61,35 @@ export default function Register() {
 			setErrMsg("Invalid Entry");
 			return;
 		}
-		console.log(user);
-		setSuccess(true);
+		
+		try {
+			// if I had named user state "userName", I would have to type user: userName as backend is expecting user
+			const response = await axios.post(
+				REGISTER_URL, 
+				JSON.stringify({ user, pwd }), 
+				{
+					headers: { 'Content-Type': 'application/json' },
+					withCredentials: true
+				}
+			);
+			console.log(reponse.data);
+			console.log(response.accessToken);
+			console.log(JSON.stringify(response))
+			setSuccess(true);
+			// place to clear input fields
+		}
+		catch (err) {
+			if (!err?.response) {
+				setErrMsg('No Server Response');
+			}
+			else if (err.response?.status === 409) {
+				setErrMsg('Usernamen Taken');
+			}
+			else {
+				setErrMsg('Registration Failed');
+			}
+			errRef.current.focus();
+		}
 	}
 	
 	return (
