@@ -8,6 +8,7 @@ import Editor from "./components/Editor";
 import Admin from "./components/Admin";
 import Lounge from "./components/Lounge";
 import Missing from "./components/Missing";
+import RequireAuth from "./components/RequireAuth";
 import { Routes, Route } from "react-router-dom";
 
 
@@ -22,10 +23,12 @@ function App() {
 				<Route path="unauthorized" element={<Unauthorized />} />
 
 				{/* protected routes */}
-				<Route path="/" element={<Home />} />
-				<Route path="editor" element={<Editor />} />
-				<Route path="admin" element={<Admin />} />
-				<Route path="lounge" element={<Lounge />} />
+				<Route element={<RequireAuth />}>
+					<Route path="/" element={<Home />} />
+					<Route path="editor" element={<Editor />} />
+					<Route path="admin" element={<Admin />} />
+					<Route path="lounge" element={<Lounge />} />
+				</Route>
 
 				{/* catch rest */}
 				<Route path="*" element={<Missing />} />
